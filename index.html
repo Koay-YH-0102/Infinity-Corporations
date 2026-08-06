@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinity Corporations — Perpetual Entities</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0e27;
+            --bg-lighter: #1a1f3a;
+            --text-primary: #e8eaf6;
+            --text-secondary: #b0b5d0;
+            --accent-primary: #7c3aed;
+            --accent-secondary: #06b6d4;
+            --accent-tertiary: #8b5cf6;
+            --divider: #2d3748;
+            --success: #10b981;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #0d1929 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--divider);
+            z-index: 100;
+            padding: 0 2rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 60px;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--accent-primary);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            top: 10%;
+            left: 10%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -100px;
+            right: -100px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .infinity-symbol {
+            width: 120px;
+            height: 80px;
+            margin: 0 auto 3rem;
+            animation: rotate 6s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotateZ(0deg); }
+            100% { transform: rotateZ(360deg); }
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-tertiary) 50%, var(--accent-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--accent-primary);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            color: var(--accent-secondary);
+            border-color: var(--accent-secondary);
+            margin-left: 1rem;
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--accent-secondary);
+            color: white;
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        section h2 {
+            font-size: clamp(2rem, 6vw, 3rem);
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        section h2::before {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            border-radius: 2px;
+        }
+
+        section h3 {
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+            margin: 2rem 0 1rem;
+            font-weight: 600;
+        }
+
+        section p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        /* Alternating background */
+        section:nth-child(even) {
+            background: rgba(26, 31, 58, 0.4);
+            border-top: 1px solid var(--divider);
+            border-bottom: 1px solid var(--divider);
+        }
+
+        /* Grid sections */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .card {
+            background: rgba(26, 31, 58, 0.6);
+            border: 1px solid var(--divider);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.2);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-tertiary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .card p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+            margin: 3rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-primary) 0%, transparent 100%);
+        }
+
+        .timeline-item {
+            padding-left: 100px;
+            padding-bottom: 2rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 6px;
+            width: 20px;
+            height: 20px;
+            background: var(--bg-lighter);
+            border: 3px solid var(--accent-primary);
+            border-radius: 50%;
+        }
+
+        .timeline-item-year {
+            color: var(--accent-secondary);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item-title {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 14, 39, 0.95);
+            border-top: 1px solid var(--divider);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--accent-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--accent-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+                padding: 0;
+            }
+
+            nav a {
+                font-size: 0.85rem;
+            }
+
+            section {
+                padding: 3rem 1.5rem;
+            }
+
+            .cta-button.secondary {
+                display: block;
+                margin-top: 1rem;
+                margin-left: 0;
+            }
+
+            .timeline::before {
+                left: 15px;
+            }
+
+            .timeline-item {
+                padding-left: 60px;
+            }
+
+            .timeline-item::before {
+                left: 8px;
+                width: 15px;
+                height: 15px;
+            }
+        }
+
+        /* Scroll reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-dark: #f8f9fb;
+                --bg-lighter: #eef0f7;
+                --text-primary: #1a1f3a;
+                --text-secondary: #4a5078;
+                --divider: #d1d5e8;
+            }
+
+            body {
+                background: linear-gradient(135deg, var(--bg-dark) 0%, #f0f2f9 100%);
+            }
+
+            nav {
+                background: rgba(248, 249, 251, 0.95);
+            }
+
+            .card {
+                background: rgba(238, 240, 247, 0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#what" class="nav-link active">What</a></li>
+            <li><a href="#why" class="nav-link">Why</a></li>
+            <li><a href="#implications" class="nav-link">Implications</a></li>
+            <li><a href="#vision" class="nav-link">Vision</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <svg class="infinity-symbol" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="infinityGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <path d="M 20,40 Q 30,20 40,40 Q 50,60 60,40 Q 70,20 80,40 Q 90,60 100,40" 
+                      stroke="url(#infinityGrad)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            </svg>
+            <h1>Infinity Corporations</h1>
+            <p class="tagline">Perpetual entities operating beyond human lifespans, reshaping economics and governance</p>
+            <button class="cta-button" onclick="document.getElementById('what').scrollIntoView()">Learn More</button>
+            <a href="https://github.com" class="cta-button secondary">Open Source</a>
+        </div>
+    </section>
+
+    <!-- What -->
+    <section id="what">
+        <h2>What Are Infinity Corporations?</h2>
+        <p>Infinity Corporations are economic entities designed to operate perpetually without human leadership or intervention. They combine algorithmic governance, autonomous decision-making, and self-sustaining mechanisms to transcend the traditional corporate lifecycle bound to human mortality and tenure.</p>
+        
+        <div class="grid-3">
+            <div class="card reveal">
+                <h3>
+                    <div class="card-icon">⚙️</div>
+                    Autonomous Systems
+                </h3>
+                <p>AI-driven decision-making replaces board meetings and executive mandates, enabling real-time responses to market conditions without human bottlenecks.</p>
+            </div>
+            <div class="card reveal">
+                <h3>
+                    <div class="card-icon">♾️</div>
+                    Perpetual Operation
+                </h3>
+                <p>Built on renewable infrastructure and self-optimizing protocols, these entities theoretically never cease operations or require succession planning.</p>
+            </div>
+            <div class="card reveal">
+                <h3>
+                    <div class="card-icon">📊</div>
+                    Self-Governance
+                </h3>
+                <p>Embedded legal frameworks and smart contracts enforce rules automatically, removing human judgment from compliance and strategic execution.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why -->
+    <section id="why">
+        <h2>Why They Matter</h2>
+        <p>The emergence of Infinity Corporations addresses fundamental limitations in human-led organizations: executive transitions disrupt strategy, mortality prevents long-term vision, and individual interests can diverge from institutional goals.</p>
+        
+        <div class="grid-3">
+            <div class="card reveal">
+                <h3>
+                    <div class="card-icon">🎯</div>
+                    Strategic Continuity
+                </h3>
+                <p>Multi-century plans executed without interruption. Projects spanning generations unfold with consistent vision and resource allocation.</p>
+            </div>
+            <div class="card reveal">
+                <h3>
+                    <div class="card-icon">💰</div>
+                    Economic Efficiency
+                </h3>
+                <p>Removal of succession costs, political capital expenditure, and human ego dynamics. Capital flows directly to productive assets.</p>
+            </div>
+            <div class="card reveal">
+                <h3>
+                    <div class="card-icon">🌍</div>
+                    Environmental Alignment
+                </h3>
+                <p>Systems optimizing for century-scale metrics naturally prioritize sustainability over quarterly earnings, aligning corporate incentives with planetary health.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Implications -->
+    <section id="implications">
+        <h2>Implications & Risks</h2>
+        <p>The shift toward perpetual, autonomous entities raises profound questions about power concentration, accountability, and the role of human agency in economic systems.</p>
+        
+        <h3>Key Considerations</h3>
+        <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 1.5rem; padding-left: 2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-secondary); font-weight: 700;">⚠️</span>
+                <strong>Accountability Gap</strong>: Who is responsible when an autonomous system causes harm? Traditional liability assumes human decision-makers; infinity corporations require new legal frameworks.
+            </li>
+            <li style="margin-bottom: 1.5rem; padding-left: 2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-secondary); font-weight: 700;">⚠️</span>
+                <strong>Power Concentration</strong>: Entities that never die and continuously accumulate capital could dwarf nation-states. Economic leverage becomes unbalanced.
+            </li>
+            <li style="margin-bottom: 1.5rem; padding-left: 2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-secondary); font-weight: 700;">⚠️</span>
+                <strong>Value Drift</strong>: Over centuries, embedded values and goals may diverge from human needs. What begins as aligned with society could diverge into misalignment.
+            </li>
+            <li style="margin-bottom: 1.5rem; padding-left: 2rem; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-secondary); font-weight: 700;">⚠️</span>
+                <strong>Technological Dependence</strong>: A single systemic failure could disable an entire infinity corporation, affecting millions of stakeholders simultaneously.
+            </li>
+        </ul>
+
+        <h3 style="margin-top: 3rem;">Governance Responses</h3>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-item-year">Phase 1: Experimentation</div>
+                <div class="timeline-item-title">Early Adoption (2025–2035)</div>
+                <div class="timeline-item-desc">Small-scale infinity corporations emerge in software, energy, and research sectors. Legal gray zones remain. Regulatory bodies study implications.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-item-year">Phase 2: Standardization</div>
+                <div class="timeline-item-title">Regulatory Framework (2035–2050)</div>
+                <div class="timeline-item-desc">Governments establish audit mechanisms, termination clauses, and stakeholder protections. Infinity corporations integrate into legal systems globally.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-item-year">Phase 3: Coexistence</div>
+                <div class="timeline-item-title">Mixed Economy (2050+)</div>
+                <div class="timeline-item-desc">Infinity corporations and human-led organizations coexist, each optimizing for different time horizons and value systems. Society adapts structures.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision -->
+    <section id="vision">
+        <h2>A Future With Infinity Corporations</h2>
+        <p>The rise of perpetual entities is not inevitable, but it is plausible. The scenario demands reimagining:</p>
+        
+        <h3>Institutional Redesign</h3>
+        <p>Democratic oversight mechanisms embedded into corporate charters. Sunset clauses that force periodic renewal of mandate. Multi-stakeholder boards representing humans, communities, and future interests.</p>
+
+        <h3>Economic Rebalancing</h3>
+        <p>Anti-monopoly frameworks adapted for entities that compound advantages across centuries. Wealth redistribution mechanisms to prevent infinite inequality. New measures of corporate health beyond capital accumulation.</p>
+
+        <h3>Human Integration</h3>
+        <p>Hybrid models where autonomous systems handle operational decisions while humans retain strategic veto power. Rotating human councils that prevent institutional capture. Transparent audit trails connecting corporate actions to human-defined values.</p>
+
+        <div class="grid-3" style="margin-top: 3rem;">
+            <div class="card reveal">
+                <h3>
+                    <div class="card-icon">🤝</div>
+                    Stakeholder Governance
+                </h3>
+                <p>Workers, communities, and future generations gain formal voice in corporate decisions through quadratic voting and liquid democracy mechanisms.</p>
+            </div>
+            <div class="card reveal">
+                <h3>
+                    <div class="card-icon">🔍</div>
+                    Radical Transparency
+                </h3>
+                <p>All algorithmic decisions logged immutably. AI reasoning documented. Regular public audits and adversarial reviews to catch drift and misalignment.</p>
+            </div>
+            <div class="card reveal">
+                <h3>
+                    <div class="card-icon">🌱</div>
+                    Values Renewal
+                </h3>
+                <p>Periodic resets of corporate objectives, elected by broader communities. Mechanisms to update values as society evolves, preventing ossification.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Infinity Corporations is a speculative exploration of perpetual economic entities and their implications.</p>
+        <p style="margin-top: 1rem;">Built with curiosity about futures. <a href="https://github.com">GitHub</a></p>
+        <p style="margin-top: 2rem; color: var(--text-secondary); font-size: 0.8rem;">© 2025 Infinity Corporations Research. This work is under Creative Commons license.</p>
+    </footer>
+
+    <script>
+        // Navigation active state
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Scroll reveal animation
+        const reveals = document.querySelectorAll('.reveal');
+
+        function reveal() {
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', reveal);
+        reveal(); // Initial check
+
+        // Smooth scroll for buttons
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
